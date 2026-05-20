@@ -3,63 +3,58 @@ import "./header.css";
 import { FaShoppingCart } from "react-icons/fa";
 
 import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import { CartContext } from "../../context/CartContext";
-
-import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 function Header() {
+  const { cartItems } = useContext(CartContext);
+  const { user, isAuthenticated, logout } = useContext(AuthContext);
 
-  const { cartItems } =
-    useContext(CartContext);
+  const navigate = useNavigate();
 
-  const totalItems = cartItems.reduce(
+  const totalItems = cartItems.reduce((acc, item) => {
+    const quantity = Number(item.quantity) || 0;
+    return acc + quantity;
+  }, 0);
 
-    (acc, item) => {
-
-      const quantity =
-        Number(item.quantity) || 0;
-
-      return acc + quantity;
-    },
-
-    0
-  );
+  function handleLogout() {
+    logout();
+    navigate("/");
+  }
 
   return (
     <header className="header">
+      <h2>DripStore</h2>
 
-      <h2>
-        DripStore
-      </h2>
+      <nav className="header-nav">
+        <Link to="/">Home</Link>
+        <Link to="/products">Produtos</Link>
 
-      <nav>
-
-        <Link to="/">
-          Home
-        </Link>
-
-        <Link to="/">
-          Produtos
-        </Link>
-
-        <Link
-          to="/cart"
-          className="cart-link"
-        >
-
+        <Link to="/cart" className="cart-link">
           Carrinho
-
           <FaShoppingCart />
-
-          <span className="cart-count">
-            {totalItems}
-          </span>
-
+          <span className="cart-count">{totalItems}</span>
         </Link>
 
-      </nav>
+        {isAuthenticated ? (
+          <>
+            <span className="user-name">
+              Olá, {user?.name || "usuário"}
+            </span>
 
+            <button className="logout-button" onClick={handleLogout}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Registrar</Link>
+          </>
+        )}
+      </nav>
     </header>
   );
 }

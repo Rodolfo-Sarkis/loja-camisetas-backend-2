@@ -17,29 +17,21 @@ body {
   margin-bottom: 30px;
 }
 
-.products-grid {
-  display: grid;
-
-  grid-template-columns:
-  repeat(auto-fit, minmax(250px, 1fr));
-
-  gap: 25px;
-}
-
 .filters {
   display: flex;
-
   gap: 20px;
-
   margin-bottom: 30px;
 }
 
 .filters input,
 .filters select {
-
   padding: 12px;
-
   border-radius: 8px;
-
   border: 1px solid #ccc;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
 }

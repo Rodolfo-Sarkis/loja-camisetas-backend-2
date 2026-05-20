@@ -1,12 +1,12 @@
 import Header from "../components/Header/Header";
 
-function ProductPage() {
+function Checkout() {
   return (
     <>
       <Header />
-      <h1>ProductPage funcionando</h1>
+      <h1>Checkout funcionando</h1>
     </>
   );
 }
 
-export default ProductPage;
+export default Checkout;
